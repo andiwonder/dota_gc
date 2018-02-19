@@ -163,8 +163,10 @@ Dota2.Dota2Client = function Dota2Client(steamClient, debug, debugMore) {
         if (header.msg == 24) {
           // fs.writeFileSync(__dirname + "/test2.txt", body, "binary");
           var builder = Protobuf.loadSync(path.join(__dirname) + '/proto/dota_match_metadata.proto');
+          console.log('body -----------------------------------');
+          console.log(body);
           console.log( body.byteLength );
-          var decoded_message = builder.CDOTAMatchMetadata.decode(body);
+          var decoded_message = builder.CDOTAMatchMetadata.decode(Buffer.from(body));
           var json = decoded_message(JSON.stringify(decoded_message));
           console.log(json);
         }
