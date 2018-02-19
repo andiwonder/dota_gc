@@ -21,6 +21,7 @@ var EventEmitter = require('events').EventEmitter,
     util = require("util"),
     Long = require("long"),
     Protobuf = require('protobufjs'),
+    path = require('path');
     Dota2 = exports;
 
 Protobuf.parse.defaults.keepCase = true;
@@ -158,6 +159,14 @@ Dota2.Dota2Client = function Dota2Client(steamClient, debug, debugMore) {
     this._gc.on("message", function fromGC(header, body, callback) {
         /* Routes messages from Game Coordinator to their handlers. */
         callback = callback || null;
+
+        if (header.msg == 24) {
+          var builder = Protobuf.loadSync(path.join(__dirname) + '/proto/dota_match_metadata.proto');
+          console.log( body.byteLength );
+          var decoded_message = builder.CDOTAMatchMetadata.decode(body);
+          var json = decoded_message(JSON.stringify(decoded_message));
+          console.log(json);
+        }
 
         var kMsg = header.msg;
         self.Logger.silly("Dota2 fromGC: " + Dota2._getMessageName(kMsg));
@@ -376,3 +385,4 @@ require("./handlers/custom");
 require("./handlers/general");
 require("./handlers/fantasy");
 require("./handlers/compendium");
+require("./handlers/metadata");

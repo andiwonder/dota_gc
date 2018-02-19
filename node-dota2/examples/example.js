@@ -38,10 +38,17 @@ var onSteamLogOn = function onSteamLogOn(logonResp) {
                 //     console.log(JSON.stringify(matchmakingStatsResponse, null, 2));
                 // });
                 // Callback based
-                // Dota2.requestMatchDetails(246546269, function(err, body) {
+                // Dota2.requestMatchDetails(3740012452, function(err, body) {
                 //     if (err) throw err;
                 //     console.log(JSON.stringify(body));
                 // });
+
+                Dota2.getMatchMetaData(1, 3412028561, function(err, body) {
+                    if (err) throw err;
+                    console.log(JSON.stringify(body));
+                });
+
+
                 /* COMMUNITY */
                 // Event based
                 // Dota2.requestProfileCard(28956443);
